@@ -58,6 +58,44 @@ class LinkedList{
         
     }
 
+    public void deleteAtFirst(){
+        //Node temp = head;
+        head = head.next;
+    }
+
+    public void delete(){
+        if(head == null){
+            return;
+        }
+
+        if(head.next == null){
+            head = null;
+            return;
+        }
+
+        Node temp = head;
+        while(temp.next.next != null){
+            temp = temp.next;
+        }
+        temp.next = null;
+    }
+
+    public void deleteAtIndex(int index){
+        if(index<0){
+            System.out.println("Index cannot be negative.");
+        }
+
+        if(index==0){
+            deleteAtFirst();
+        }
+
+        Node temp = head;
+        for(int i = 0; i<index -1;i++){
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+    }
+
     public void print(){
         Node temp = head;
         System.out.println();
@@ -78,7 +116,7 @@ class LL_Implementation{
         boolean exit = false;
         
         while(!exit){
-            System.out.println("Enter 1 for Insertion\n2 for Insertion at first\n3 for Insertion at specific index\n4 to print the Linked List\n5 to exit ");
+            System.out.println("Enter 1 for Insertion\n2 for Insertion at first\n3 for Insertion at specific index\n4 to print the Linked List\n5 to delete at last\n6 to delete node at first\n7 to delete at a specifi index\n8 to exit ");
             System.out.println();
             int choice = sc.nextInt();
             switch (choice) {
@@ -101,6 +139,16 @@ class LL_Implementation{
                     list.print();
                     break;
                 case 5:
+                    list.delete();
+                    break;
+                case 6:
+                    list.deleteAtFirst();
+                    break;
+                case 7:
+                    System.out.println("Enter index:");
+                    list.deleteAtIndex(sc.nextInt());
+                    break;
+                case 8:
                     exit = true;
                     break;
                 default:
