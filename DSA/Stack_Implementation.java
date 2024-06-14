@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Stack_Implementation {
     static int size;
-    static  int[] stack = new int[size];
+    static  int[] stack;
     static int top = -1;
 
     public static void push(int val){
-        if(stack.length>top){
+        if(top == size-1){
             System.out.println("Stack overflow");
         }else{
             top++;
@@ -17,32 +17,43 @@ public class Stack_Implementation {
     public static int pop(){
         if(top == -1){
             System.out.println("Stack underflow"); 
+            return -1;
         }else{
             int data = stack[top];
             top--;
             return data;
-        }
-        return -1;
+        }  
     }
 
     public static int peek(){
-        int data = stack[top];
-        return data;
+        if (top == -1) {
+            System.out.println("Stack is empty");
+            return -1;
+        }else{
+            return stack[top];
+        }
+        
     }
 
     public static void show(){
-        for(int i=0;i<top;i++){
-            System.out.print(stack[i] + "");
+        if (top == -1) {
+            System.out.println("Stack is empty");
+        } else {
+            for (int i = 0; i <= top; i++) {
+                System.out.print(stack[i] + " ");
+            }
+            System.out.println();
         }
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the size of the Stack :");
-        int size = sc.nextInt();
+        size = sc.nextInt();
+        stack = new int[size];
         
         boolean exit = false;
         while(!exit){
-            System.out.println("Enter choice: \n1.push \n2.pop \n3.peek \n4.show");
+            System.out.println("1.push \n2.pop \n3.peek \n4.show \n5.exit\nEnter choice: ");
             int ch = sc.nextInt();
             switch (ch){
                 case 1:
@@ -50,16 +61,23 @@ public class Stack_Implementation {
                     push(sc.nextInt());
                     break;
                 case 2:
-                    System.out.print(pop());
+                    int poppedvalue= pop();
+                    if(poppedvalue != 0){
+                        System.out.println("Popped value: " + poppedvalue);
+                    }
                     break;
                 case 3:
-                    System.out.print(peek());
-                    break;
+                int peekedValue = peek();
+                if (peekedValue != -1) {
+                    System.out.println("Top value: " + peekedValue);
+                }
+                break;
                 case 4:
                     show();
                     break;
                 case 5:
                     exit = true;
+                    break;
                 default:
                     System.out.println("Enter a valid option");
             }
