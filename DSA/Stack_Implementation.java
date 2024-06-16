@@ -4,7 +4,7 @@ public class Stack_Implementation {
     static int size;
     static  int[] stack;
     static int top = -1;
-
+    
     public static void push(int val){
         if(top == size-1){
             System.out.println("Stack overflow");
