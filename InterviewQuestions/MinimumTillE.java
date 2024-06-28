@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class LargestTillE {
+public class MinimumTillE {
 
     public static String findLargestNumber(String[] str){
         StringBuilder sb = new StringBuilder();
