@@ -1,76 +1,141 @@
-// TreeNode class representing each node in the BST
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
 
-    public TreeNode(int val) {
-        this.val = val;
-        left = null;
-        right = null;
+import java.util.Scanner;
+
+class Node {
+
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
     }
 }
 
+class BST {
 
-public class BinarySearchTree {
-    private TreeNode root;
+    Node root;
 
-    public BinarySearchTree() {
-        root = null;
+    public void insert(int data) {
+        root = insertRec(root, data);
     }
 
-    public void insert(int val) {
-        TreeNode newNode = new TreeNode(val);
+    public Node insertRec(Node root, int data) {
         if (root == null) {
-            root = newNode;
-            return;
+            root = new Node(data);
+        } else if (root.data > data) {
+            root.left = insertRec(root.left, data);
+        } else if (root.data < data) {
+            root.right = insertRec(root.right, data);
         }
 
-        TreeNode current = root;
-        while (true) {
-            if (val < current.val) {
-                if (current.left == null) {
-                    current.left = newNode;
-                    break;
-                } else {
-                    current = current.left;
-                }
-            } else {
-                if (current.right == null) {
-                    current.right = newNode;
-                    break;
-                } else {
-                    current = current.right;
-                }
-            }
-        }
+        return root;
     }
 
-    public void printInorder() {
-        inorderRecursive(root);
-        System.out.println(); 
+    public void inOrder() {
+        inOrderRec(root);
     }
 
-    private void inorderRecursive(TreeNode root) {
+    public void inOrderRec(Node root) {
         if (root != null) {
-            inorderRecursive(root.left); // Traverse left subtree
-            System.out.print(root.val + " "); // Print current node's value
-            inorderRecursive(root.right); // Traverse right subtree
+            inOrderRec(root.left);
+            System.out.print(root.data + " ");
+            inOrderRec(root.right);
+        }
+
+    }
+
+    public void preOrder() {
+        preOrderRec(root);
+    }
+
+    public void preOrderRec(Node root) {
+        if (root != null) {
+            System.out.print(root.data + " ");
+            preOrderRec(root.left);
+            preOrderRec(root.right);
+        }
+
+    }
+
+    public void postOrder() {
+        postOrderRec(root);
+    }
+
+    public void postOrderRec(Node root) {
+        if (root != null) {
+            postOrderRec(root.left);
+            postOrderRec(root.right);
+            System.out.print(root.data + " ");
+        }
+
+    }
+
+    public void search(int data) {
+        boolean isfound = searchRec(root, data);
+        if (isfound) {
+            System.out.println("The element is present in the binary tree");
+        } else {
+            System.out.println("The element does not present in the binary tree");
         }
     }
+
+    public boolean searchRec(Node root, int val) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.data == val) {
+            return true;
+        }
+        if (val > root.data) {
+            return searchRec(root.right, val);
+        } else {
+            return searchRec(root.left, val);
+        }
+
+    }
+}
+
+class BinarySearchTree {
 
     public static void main(String[] args) {
-        BinarySearchTree bst = new BinarySearchTree();
-
-        bst.insert(23);
-        bst.insert(86);
-        bst.insert(2);
-        bst.insert(80);
-        bst.insert(106);
-        bst.insert(60);
-        bst.insert(4);
-
-        System.out.println("Inorder traversal of the BST:");
-        bst.printInorder();
+        BST tree = new BST();
+        Scanner sc = new Scanner(System.in);
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Enter choice:\n 1.Insert\n 2.Inorder\n 3.Preorder\n 4.Postorder\n 5.Search\n 6.exit");
+            int ch = sc.nextInt();
+            switch (ch) {
+                case 1:
+                    System.out.println("Enter node to be inserted");
+                    tree.insert(sc.nextInt());
+                    break;
+                case 2:
+                    System.out.println("Inorder Traversal");
+                    tree.inOrder();
+                    System.out.println();
+                    break;
+                case 3:
+                    System.out.println("Preorder Traversal");
+                    tree.preOrder();
+                    System.out.println();
+                    break;
+                case 4:
+                    System.out.println("Postorder Traversal");
+                    tree.postOrder();
+                    System.out.println();
+                    break;
+                case 5:
+                    System.out.println("Enter the element to be searched");
+                    tree.search(sc.nextInt());
+                    break;
+                case 6:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Enter valid choice");
+            }
+        }
     }
 }
